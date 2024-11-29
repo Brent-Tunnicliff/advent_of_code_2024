@@ -1,6 +1,15 @@
 {
-  "originHash" : "07f102ece3dee2d745debee911047d28682d14c69377d5d988949a086c2ed2ef",
+  "originHash" : "c95d9fa058babbb42b7b29fe6986ad52a4b8c5868f4616a52bc3b4254ab3d6fe",
   "pins" : [
+    {
+      "identity" : "advent_of_code_helper",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Brent-Tunnicliff/advent_of_code_helper",
+      "state" : {
+        "revision" : "103b29baa14c8f168bf18657427e96ec74647153",
+        "version" : "0.1.0"
+      }
+    },
     {
       "identity" : "swift-algorithms",
       "kind" : "remoteSourceControl",

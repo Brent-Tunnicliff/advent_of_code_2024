@@ -6,6 +6,7 @@ let dependencies: [Target.Dependency] = [
     .product(name: "Collections", package: "swift-collections"),
     .product(name: "ArgumentParser", package: "swift-argument-parser"),
     .product(name: "SwiftPriorityQueue", package: "SwiftPriorityQueue"),
+    .product(name: "AOCHelper", package: "advent_of_code_helper"),
 ]
 
 let package = Package(
@@ -32,6 +33,10 @@ let package = Package(
             url: "https://github.com/davecom/SwiftPriorityQueue",
             .upToNextMajor(from: "1.4.0")
         ),
+        .package(
+            url: "https://github.com/Brent-Tunnicliff/advent_of_code_helper",
+            exact: "0.1.0"
+        )
     ],
     targets: [
         .executableTarget(
