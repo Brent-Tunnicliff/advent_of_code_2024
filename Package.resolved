@@ -1,13 +1,13 @@
 {
-  "originHash" : "c95d9fa058babbb42b7b29fe6986ad52a4b8c5868f4616a52bc3b4254ab3d6fe",
+  "originHash" : "023e043952eda1333121fc5479713c99c194134a04d94415d250111a60ed3076",
   "pins" : [
     {
       "identity" : "advent_of_code_helper",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Brent-Tunnicliff/advent_of_code_helper",
       "state" : {
-        "revision" : "103b29baa14c8f168bf18657427e96ec74647153",
-        "version" : "0.1.0"
+        "revision" : "9511550d12b5f102be93d0589b767829553c8701",
+        "version" : "0.2.1"
       }
     },
     {

@@ -1,3 +1,6 @@
+// Copyright © 2024 Brent Tunnicliff <brent@tunnicliff.dev>
+
+import AOCHelper
 import Algorithms
 
 struct Day00: AdventDay {

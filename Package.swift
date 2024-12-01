@@ -35,7 +35,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/Brent-Tunnicliff/advent_of_code_helper",
-            exact: "0.1.0"
+            .upToNextMajor(from: "0.1.0")
         )
     ],
     targets: [

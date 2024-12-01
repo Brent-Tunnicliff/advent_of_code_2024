@@ -1,5 +1,7 @@
 // Copyright © 2024 Brent Tunnicliff <brent@tunnicliff.dev>
 
+import AOCHelper
+
 struct Day01: AdventDay {
     let data: String
 
