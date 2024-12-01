@@ -3,7 +3,6 @@ import Testing
 @testable import AdventOfCode
 
 // Make a copy of this file for every day to ensure the provided smoke tests pass.
-@Suite("Day00")
 struct Day00Tests {
     // Smoke test data provided in the challenge question
     let testData = """
@@ -25,14 +24,14 @@ struct Day00Tests {
         """
 
     @Test
-    func testPart1() async throws {
+    func testPart1() {
         let challenge = Day00(data: testData)
-        #expect(String(describing: challenge.part1()) == "6000")
+        #expect(challenge.part1() == 6000)
     }
 
     @Test
-    func testPart2() async throws {
+    func testPart2() {
         let challenge = Day00(data: testData)
-        #expect(String(describing: challenge.part2()) == "32000")
+        #expect(challenge.part2() == 32000)
     }
 }
