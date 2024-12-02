@@ -20,9 +20,9 @@ struct Day02Tests {
         #expect(challenge.part1() == 2)
     }
 
-//    @Test
-//    func testPart2() {
-//        let challenge = Day00(data: testData)
-//        #expect(challenge.part2() == 32000)
-//    }
+    @Test
+    func testPart2() {
+        let challenge = Day02(data: testData)
+        #expect(challenge.part2() == 4)
+    }
 }
