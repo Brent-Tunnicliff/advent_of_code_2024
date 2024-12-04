@@ -55,4 +55,36 @@ struct Day04: AdventDay {
                 .count
         }
     }
+
+    func part2() -> Int {
+        let word = "MAS"
+        let grid = grid
+        let possibleWordsJoin = grid.values.filter { $0.value == "A" }
+        return possibleWordsJoin.reduce(into: 0) { partialResult, item in
+            let (key, _) = item
+            let matchingWords = [
+                // Diagonals
+                [
+                    Coordinates(x: key.x - 1, y: key.y - 1),
+                    key,
+                    Coordinates(x: key.x + 1, y: key.y + 1),
+                ],
+                [
+                    Coordinates(x: key.x + 1, y: key.y - 1),
+                    key,
+                    Coordinates(x: key.x - 1, y: key.y + 1),
+                ],
+            ]
+            .map {
+                $0.map { grid[$0] ?? "" }.joined(separator: "")
+            }
+            .filter { (value: String) in
+                value == word || String(value.reversed()) == word
+            }
+
+            if matchingWords.count == 2 {
+                partialResult += 1
+            }
+        }
+    }
 }
