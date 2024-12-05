@@ -50,4 +50,34 @@ struct Day05: AdventDay {
             partialResult += pageUpdate[indexToAdd]
         }
     }
+
+    func part2() -> Int {
+        let (orderingRules, pagesToProduce) = pages
+        return pagesToProduce.reduce(into: 0) { partialResult, pageUpdate in
+            var isValid = true
+            for (index, page) in pageUpdate.enumerated() {
+                let rulesForPage = orderingRules[page] ?? []
+                let previousPages = Set(pageUpdate.dropLast(pageUpdate.count - index))
+                guard previousPages.intersection(rulesForPage).isEmpty else {
+                    isValid = false
+                    break
+                }
+
+                // Otherwise, continue for loop to next index.
+            }
+
+            // If no rules are broken, move to next pageUpdate.
+            guard !isValid else {
+                return
+            }
+
+            let sortedPageUpdate = pageUpdate.sorted { lhs, rhs in
+                orderingRules[lhs]?.contains(rhs) ?? false
+            }
+
+            // if we have reached here, it means the pageUpdate is valid.
+            let indexToAdd = sortedPageUpdate.count / 2
+            partialResult += sortedPageUpdate[indexToAdd]
+        }
+    }
 }
