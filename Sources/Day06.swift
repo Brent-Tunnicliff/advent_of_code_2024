@@ -13,15 +13,66 @@ struct Day06: AdventDay {
         return (grid, startingPositions[0])
     }
 
-    func part1() -> Int {
-        // I am sure this will not work for part 2, haha :)
+    func part1() throws -> Int {
         let (grid, startingPosition) = entities
-        var positionsVisited: Set<Coordinates> = [startingPosition]
-        var currentPosition: (coordinates: Coordinates, direction: CompassDirection) = (startingPosition, .north)
+        return try getPositionsVisited(grid: grid, startingPosition: startingPosition).count
+    }
+
+    func part2() async throws -> Int {
+        let (grid, startingPosition) = entities
+        // We only need to check positions the guard would normally visit.
+        var possiblePositions = try getPositionsVisited(grid: grid, startingPosition: startingPosition)
+        // Cannot replace the starting position.
+        possiblePositions.remove(startingPosition)
+
+        return await withTaskGroup(of: Optional<Coordinates>.self) { group in
+            for (offset, newObstruction) in possiblePositions.enumerated() {
+                group.addTask {
+                    let newGrid = grid.adding([newObstruction: .obstruction])
+                    do {
+                        _ = try getPositionsVisited(
+                            grid: newGrid,
+                            startingPosition: startingPosition
+                        )
+                        return nil
+                    } catch {
+                        guard case .loop = error as? DayError else {
+                            preconditionFailure("Unexpected error: \(error)")
+                        }
+
+                        return newObstruction
+                    }
+                }
+            }
+
+            var results = 0
+            for await result in group where result != nil {
+                results += 1
+            }
+
+            return results
+        }
+    }
+
+    private func getPositionsVisited(
+        grid: DayGrid,
+        startingPosition: Coordinates
+    ) throws -> Set<Coordinates> {
+        var currentPosition = History(coordinates: startingPosition, direction: .north)
+        var history: Set<History> = [currentPosition]
         var inGrid = true
         while inGrid {
-            let nextPosition = currentPosition.coordinates.next(in: currentPosition.direction)
-            guard let value = grid[nextPosition] else {
+            let nextPosition = History(
+                coordinates: currentPosition.coordinates.next(in: currentPosition.direction),
+                direction: currentPosition.direction
+            )
+
+            guard !history.contains(nextPosition) else {
+                // Loop!
+                throw DayError.loop
+            }
+
+            guard let value = grid[nextPosition.coordinates] else {
                 // If there is no value then we left the grid
                 inGrid = false
                 continue
@@ -29,16 +80,19 @@ struct Day06: AdventDay {
 
             guard !value.isObstruction else {
                 // Turn right and try again
-                currentPosition = (currentPosition.coordinates, currentPosition.direction.turnRight)
+                currentPosition = History(
+                    coordinates: currentPosition.coordinates,
+                    direction: currentPosition.direction.turnRight
+                )
                 continue
             }
 
             // Store the position and move to the next step forward.
-            positionsVisited.insert(nextPosition)
-            currentPosition = (nextPosition, currentPosition.direction)
+            history.insert(nextPosition)
+            currentPosition = nextPosition
         }
 
-        return positionsVisited.count
+        return history.map(\.coordinates).toSet()
     }
 }
 
@@ -57,4 +111,13 @@ private enum Value: String, CustomStringConvertible, CaseIterable {
     var isStart: Bool {
         self == .start
     }
+}
+
+private enum DayError: Error {
+    case loop
+}
+
+private struct History: Hashable {
+    let coordinates: Coordinates
+    let direction: CompassDirection
 }
