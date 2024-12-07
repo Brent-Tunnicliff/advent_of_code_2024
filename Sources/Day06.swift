@@ -26,7 +26,7 @@ struct Day06: AdventDay {
         possiblePositions.remove(startingPosition)
 
         return await withTaskGroup(of: Optional<Coordinates>.self) { group in
-            for (offset, newObstruction) in possiblePositions.enumerated() {
+            for newObstruction in possiblePositions {
                 group.addTask {
                     let newGrid = grid.adding([newObstruction: .obstruction])
                     do {
