@@ -31,6 +31,7 @@ struct Day05: AdventDay {
         return (orderingRules, pagesToProduce)
     }
 
+    // Benchmark: 0.008488458 seconds
     func part1() -> Int {
         let (orderingRules, pagesToProduce) = pages
         return pagesToProduce.reduce(into: 0) { partialResult, pageUpdate in
@@ -51,6 +52,7 @@ struct Day05: AdventDay {
         }
     }
 
+    // Benchmark: 0.007834917 seconds
     func part2() -> Int {
         let (orderingRules, pagesToProduce) = pages
         return pagesToProduce.reduce(into: 0) { partialResult, pageUpdate in

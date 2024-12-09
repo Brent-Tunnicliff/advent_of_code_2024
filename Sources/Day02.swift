@@ -16,12 +16,14 @@ struct Day02: AdventDay {
             }
     }
 
+    // Benchmark: 0.00676025 seconds
     func part1() -> Int {
         reports.filter {
             isSafe(report: $0, previousLevels: [], tolerance: 0, isIncrementing: nil)
         }.count
     }
 
+    // Benchmark: 0.006877542 seconds
     func part2() -> Int {
         reports.filter {
             isSafe(report: $0, previousLevels: [], tolerance: 1, isIncrementing: nil)

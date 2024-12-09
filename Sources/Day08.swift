@@ -15,6 +15,7 @@ struct Day08: AdventDay {
         }
     }
 
+    // Benchmark: 0.002104 seconds
     func part1() -> Int {
         let grid = grid
         let antennaTypes = grid.values.compactMap(\.value.antennaLabel).toSet()
@@ -51,6 +52,7 @@ struct Day08: AdventDay {
         return antinodes.filter { grid[$0] != nil }.count
     }
 
+    // Benchmark: 0.002235334 seconds
     func part2() -> Int {
         // Not much time for this, so lets just copy part 1 and change this time instead of making a reusable functions.
         let grid = grid

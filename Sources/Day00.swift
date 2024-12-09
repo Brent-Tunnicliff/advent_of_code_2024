@@ -14,12 +14,14 @@ struct Day00: AdventDay {
         }
     }
 
+    // Benchmark: 0.00218875 seconds
     // Replace this with your solution for the first part of the day's challenge.
     func part1() -> Int {
         // Calculate the sum of the first set of input data
         entities.first?.reduce(0, +) ?? 0
     }
 
+    // Benchmark: 0.002167667 seconds
     // Replace this with your solution for the second part of the day's challenge.
     func part2() -> Int {
         // Sum the maximum entries in each set of data

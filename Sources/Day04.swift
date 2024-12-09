@@ -9,6 +9,7 @@ struct Day04: AdventDay {
         Grid(data: data)
     }
 
+    // Benchmark: 0.022649041 seconds
     func part1() -> Int {
         let word = "XMAS"
         let grid = grid
@@ -56,6 +57,7 @@ struct Day04: AdventDay {
         }
     }
 
+    // Benchmark: 0.011470958 seconds
     func part2() -> Int {
         let word = "MAS"
         let grid = grid

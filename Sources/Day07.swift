@@ -6,10 +6,12 @@ import Algorithms
 struct Day07: AdventDay {
     let data: String
 
+    // Benchmark: 0.031751292 seconds
     func part1() -> Int {
         getValidCount(applyConcatenation: false)
     }
 
+    // Benchmark: 1.207521125 seconds
     func part2() -> Int {
         getValidCount(applyConcatenation: true)
     }

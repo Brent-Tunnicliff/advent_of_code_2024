@@ -13,11 +13,13 @@ struct Day06: AdventDay {
         return (grid, startingPositions[0])
     }
 
+    // Benchmark: 0.012991458 seconds
     func part1() throws -> Int {
         let (grid, startingPosition) = entities
         return try getPositionsVisited(grid: grid, startingPosition: startingPosition).count
     }
 
+    // Benchmark: 4.579239041 seconds
     func part2() async throws -> Int {
         let (grid, startingPosition) = entities
         // We only need to check positions the guard would normally visit.

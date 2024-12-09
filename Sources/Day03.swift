@@ -7,10 +7,12 @@ import RegexBuilder
 struct Day03: AdventDay {
     let data: String
 
+    // Benchmark: 0.014745041 seconds
     func part1() -> Int {
         calculateValues(data)
     }
 
+    // Benchmark: 0.0174155 seconds
     func part2() -> Int {
         // Lets split this into two regex.
         // First one only captures the valid substrings.

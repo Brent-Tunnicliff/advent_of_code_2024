@@ -19,6 +19,7 @@ struct Day01: AdventDay {
             }
     }
 
+    // Benchmark: 0.004215291 seconds
     func part1() -> Int {
         let input = input
         let listOne = input.lhs.sorted()
@@ -30,6 +31,7 @@ struct Day01: AdventDay {
         }
     }
 
+    // Benchmark: 0.004064375 seconds
     func part2() -> Int {
         let (listOne, listTwo) = input
         // Map list two into a dictionary of counts.
