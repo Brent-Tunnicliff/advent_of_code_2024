@@ -53,8 +53,8 @@ The `AdventOfCode.swift` file controls which day's challenge is run
 with `swift run`. By default that runs the most recent challenge in the package.
 
 To supply command line arguments use `swift run AdventOfCode`. For example,
-`swift run -c release AdventOfCode --benchmark 3` builds the binary with full
-optimizations, and benchmarks the challenge for day 3.
+`swift run -c release AdventOfCode 3` builds the binary with full
+optimizations, and runs the challenge for day 3.
 
 ## Linting and Formatting
 

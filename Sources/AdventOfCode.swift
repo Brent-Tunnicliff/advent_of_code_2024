@@ -20,9 +20,6 @@ struct AdventOfCode: AsyncParsableCommand {
     @Argument(help: "The day of the challenge. For December 1st, use '1'.")
     var day: Int?
 
-    @Flag(help: "Benchmark the time taken by the solution")
-    var benchmark: Bool = false
-
     @Flag(help: "Run all the days available")
     var all: Bool = false
 
@@ -82,10 +79,6 @@ struct AdventOfCode: AsyncParsableCommand {
 
             let timing1 = await run(part: challenge.part1, named: "Part 1")
             let timing2 = await run(part: challenge.part2, named: "Part 2")
-
-            guard benchmark else {
-                return
-            }
 
             print("Part 1 took \(timing1), part 2 took \(timing2).")
             #if DEBUG
