@@ -22,4 +22,11 @@ struct Day10Tests {
         let result = await challenge.part1()
         #expect(result == 36)
     }
+
+    @Test
+    func testPart2() async {
+        let challenge = Day10(data: testData)
+        let result = await challenge.part2()
+        #expect(result == 81)
+    }
 }
