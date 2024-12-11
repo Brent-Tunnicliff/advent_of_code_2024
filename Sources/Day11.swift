@@ -9,29 +9,60 @@ struct Day11: AdventDay {
         data.split(separator: " ").map { $0.toInt() }
     }
 
-    // Benchmark:
-    func part1() -> Int {
-        var input = input
-        for _ in 0..<25 {
-            input = input.blink()
+    // Benchmark: 0.005274542 seconds
+    func part1() async -> Int {
+        var result = 0
+        for number in input {
+            result += await calculateBlinks(value: number, remainingBlinks: 25)
         }
 
-        return input.count
+        return result
+    }
+
+    // Benchmark: 0.156297333 seconds
+    func part2() async -> Int {
+        var result = 0
+        for number in input {
+            result += await calculateBlinks(value: number, remainingBlinks: 75)
+        }
+
+        return result
+    }
+
+    private func calculateBlinks(value: Int, remainingBlinks: Int) async -> Int {
+        let cacheKey = Key(value: value, remainingBlinks: remainingBlinks)
+        if let cachedValue = await cache.object(for: cacheKey) {
+            return cachedValue
+        }
+
+        let newRemainingBlinks = remainingBlinks - 1
+        guard newRemainingBlinks >= 0 else {
+            return 1
+        }
+
+        let newValues: [Int] =
+            if value == 0 {
+                [1]
+            } else if value.description.count.isMultiple(of: 2) {
+                value.split
+            } else {
+                [value * 2024]
+            }
+
+        var results = 0
+        for newValue in newValues {
+            results += await calculateBlinks(value: newValue, remainingBlinks: newRemainingBlinks)
+        }
+
+        await cache.set(results, for: cacheKey)
+        return results
     }
 }
 
-extension [Int] {
-    fileprivate func blink() -> [Int] {
-        reduce(into: [Int]()) { partialResult, element in
-            if element == 0 {
-                partialResult.append(1)
-            } else if element.description.count.isMultiple(of: 2) {
-                partialResult.append(contentsOf: element.split)
-            } else {
-                partialResult.append(element * 2024)
-            }
-        }
-    }
+private let cache = Cache<Key, Int>()
+private struct Key: Hashable {
+    let value: Int
+    let remainingBlinks: Int
 }
 
 extension Int {
@@ -39,6 +70,6 @@ extension Int {
         let value = self.description
         let digits = Array(value.chunks(ofCount: value.count / 2))
         precondition(digits.count == 2)
-        return [digits[0].toInt(), digits[1].toInt() ]
+        return [digits[0].toInt(), digits[1].toInt()]
     }
 }
