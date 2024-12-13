@@ -23,7 +23,7 @@ struct Day13: AdventDay {
             }
     }
 
-    // Benchmark:
+    // Benchmark: 0.013329292 seconds
     func part1() -> Int {
         let entries = entries
         var cost = 0
@@ -33,57 +33,48 @@ struct Day13: AdventDay {
         return cost
     }
 
-    private func calculateLowestCost(of entry: Entry) -> Int? {
-        var currentOffset = 0
-        var result: Int?
-        while true {
-            currentOffset += 1
-            // Not possible, so break.
-            guard currentOffset * entry.buttonA.x < entry.prize.x else {
-                break
-            }
-
-            let xMultiplier = getPotentialMultiplier(
-                buttonA: entry.buttonA.x,
-                buttonB: entry.buttonB.x,
-                result: entry.prize.x,
-                offset: currentOffset
+    // Benchmark: 0.011928333 seconds
+    func part2() -> Int {
+        let entries = entries.map {
+            (
+                $0.buttonA,
+                $0.buttonB,
+                Coordinates(
+                    x: $0.prize.x + 10_000_000_000_000,
+                    y: $0.prize.y + 10_000_000_000_000
+                )
             )
-            let yMultiplier = getPotentialMultiplier(
-                buttonA: entry.buttonA.y,
-                buttonB: entry.buttonB.y,
-                result: entry.prize.y,
-                offset: currentOffset
-            )
-
-            guard let xMultiplier, let yMultiplier, xMultiplier == yMultiplier else {
-                continue
-            }
-
-            let cost = 3 * currentOffset + xMultiplier
-            // TODO: validate if this is really working, or even needed.
-            if let result, result < cost {
-                break
-            }
-
-            result = cost
+        }
+        var cost = 0
+        for entry in entries {
+            cost += calculateLowestCost(of: entry) ?? 0
         }
 
-        return result
+        return cost
     }
 
-    private func getPotentialMultiplier(
-        buttonA: Int,
-        buttonB: Int,
-        result: Int,
-        offset: Int
-    ) -> Int? {
-        let buttonAValue = buttonA * offset
-        let remaining = result - buttonAValue
-        guard remaining % buttonB == 0 else {
+    // I needed to look up the equation for this online.
+    // Looks like we are getting to the point were knowledge of mathematical equations gets more important.
+    private func calculateLowestCost(of entry: Entry) -> Int? {
+        let pX = entry.prize.x
+        let pY = entry.prize.y
+        let aX = entry.buttonA.x
+        let aY = entry.buttonA.y
+        let bX = entry.buttonB.x
+        let bY = entry.buttonB.y
+
+        let bCount = (aY * pX - aX * pY) / (aY * bX - aX * bY)
+        let bCountRemainder = (aY * pX - aX * pY) % (aY * bX - aX * bY)
+        guard bCount >= 0, bCountRemainder == 0 else {
             return nil
         }
 
-        return remaining / buttonB
+        let aCount = (pY - bY * bCount) / aY
+        let aCountRemainder = (pY - bY * bCount) % aY
+        guard aCount >= 0, aCountRemainder == 0 else {
+            return nil
+        }
+
+        return 3 * aCount + bCount
     }
 }
